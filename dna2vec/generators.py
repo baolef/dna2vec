@@ -16,7 +16,7 @@ class SeqFragmenter:
         pass
 
     def get_acgt_seqs(self, seq):
-        return remove_empty(re.split(r'[^ACGTacgt]+', str(seq)))
+        return remove_empty(re.split(r'[^ACGUacgu]+', str(seq)))
 
 class SlidingKmerFragmenter:
     """
@@ -90,7 +90,7 @@ class SeqGenerator:
             # SeqIO takes twice as much memory than even simple fh.readlines()
             for seq_record in SeqIO.parse(fh, "fasta"):
                 whole_seq = seq_record.seq
-                self.logger.info('Whole fasta seqlen: {}'.format(len(whole_seq)))
+                self.logger.debug('Whole fasta seqlen: {}'.format(len(whole_seq)))
                 curr_left = 0
                 while curr_left < len(whole_seq):
                     seqlen = rng.randint(self.seqlen_ulim // 2, self.seqlen_ulim)
